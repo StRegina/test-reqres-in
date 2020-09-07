@@ -2,13 +2,16 @@
 import requests
 class ReqresApiClient:
 
+    base_path = 'https://reqres.in/api/'
+
     def get_delayed_response():
-            response = requests.get('https://reqres.in/api/users?delay=3')
+            response = requests.get(f'{base_path}users?delay=3')
             return response
 
     def get_list_resourse():
-            response = requests.get('https://reqres.in/api/unknown')
+            response = requests.get(base_path+'unknown')
             return response
+
     def get_list_users():
             response = requests.get('https://reqres.in/api/users?page=2')
             return response
