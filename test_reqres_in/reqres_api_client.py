@@ -76,7 +76,7 @@ class ReqresApiClient:
         response = self.request('PUT','users/2', data=pload)
         return response
 
-    def test_patch_update(self):
+    def patch_update(self):
         pload = {"name": "morpheus", "job": "zion resident"}
         response = self.request('PATCH','users/2', data=pload)
         return response

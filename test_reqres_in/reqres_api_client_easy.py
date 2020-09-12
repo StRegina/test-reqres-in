@@ -70,3 +70,8 @@ class ReqresApiClient:
         pload = {"name": "morpheus", "job": "zion resident"}
         response = requests.put('https://reqres.in/api/users/2', data=pload)
         return response
+
+    def test_patch_update():
+        pload = {"name": "morpheus", "job": "zion resident"}
+        response = requests.patch('https://reqres.in/api/users/2', data=pload)
+        return response
