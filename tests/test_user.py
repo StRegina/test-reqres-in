@@ -1,43 +1,36 @@
 import requests
-def test_get_list_users():
-    response = requests.get('https://reqres.in/api/users?page=2')
-    if response.status_code == 200:
-        return response.json()
+from utils.api_client import ReqresApiClient
 
-def test_get_single_users():
-    response = requests.get('https://reqres.in/api/users/2')
-    if response.status_code == 200:
-        return response.json()
+class TestUser():
 
-def test_get_single_users_not_found():
-    response = requests.get('https://reqres.in/api/users/23')
-    if response.status_code == 404:
-        return response.json()
+    def test_get_list_users(self, api_client):
+        response = api_client.users_page(page_id = 2, data = None)
+        assert response.status_code == 200
 
-def test_delete_user():
-    response = requests.delete('https://reqres.in/api/users/2')
-    if response.status_code == 200:
-        return response.json()
+    def test_get_single_users(self, api_client):
+        response = api_client.users(user_id = 2, data = None)
+        assert response.status_code == 200
 
-def test_get_delayed_response():
-    response = requests.get('https://reqres.in/api/users?delay=3')
-    if response.status_code == 200:
-        return response.json()
+    def test_get_single_users_not_found(self, api_client):
+        response = api_client.users(user_id = 23, data = None)
+        assert response.status_code == 404
 
-def test_post_create():
-    pload = {"name": "morpheus", "job": "leader"}
-    response = requests.post('https://reqres.in/api/users', data=pload)
-    if response.status_code == 201:
-        return response.json()
+    def test_delete_user(self, api_client):
+        response = api_client.users(user_id = 2, data = None)
+        assert response.status_code == 200
 
-def test_patch_update():
-    pload = {"name": "morpheus", "job": "zion resident"}
-    response = requests.patch('https://reqres.in/api/users/2', data=pload)
-    if response.status_code == 200:
-        return response.json()
+    def test_get_delayed_response(self, api_client):
+        response = api_client.delayed(delayed_id = 3, data = None)
+        assert response.status_code == 200
 
-def test_put_update():
-    pload = {"name": "morpheus", "job": "zion resident"}
-    response = requests.put('https://reqres.in/api/users/2', data=pload)
-    if response.status_code == 200:
-        return response.json()
+    def test_post_create(self, api_client):
+        response = api_client.users(data = {"name": "morpheus", "job": "leader"})
+        assert response.status_code == 201
+
+    def test_patch_update(self, api_client):
+        response = api_client.users(user_id = 2, data = {"name": "morpheus", "job": "zion resident"})
+        assert response.status_code == 200
+
+    def test_put_update(self, api_client):
+        response = api_client.users(user_id = 2, data = {"name": "morpheus", "job": "zion resident"})
+        assert response.status_code == 200

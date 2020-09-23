@@ -1,15 +1,16 @@
 import requests
-def test_get_single_resourse():
-    response = requests.get('https://reqres.in/api/unknown/2')
-    if response.status_code == 200:
-        return response.json()
+from utils.api_client import ReqresApiClient
 
-def test_get_single_resourse_not_found():
-    response = requests.get('https://reqres.in/api/unknown/23')
-    if response.status_code == 404:
-        return response.json()
+class TestGetResourse():
 
-def test_get_list_resourse():
-    response = requests.get('https://reqres.in/api/unknown')
-    if response.status_code == 200:
-        return response.json()
+    def test_get_single_resourse(self, api_client):
+        response = api_client.get_resourse(2)
+        assert response.status_code == 200
+
+    def test_get_single_resourse_not_found(self, api_client):
+        response = api_client.get_resourse(23)
+        assert response.status_code == 404
+
+    def test_get_list_resourse(self, api_client):
+        response = api_client.get_resourse(None)
+        assert response.status_code == 404

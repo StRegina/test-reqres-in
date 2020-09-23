@@ -1,12 +1,12 @@
 import requests
-def test_post_login_successful():
-    pload = {"email": "eve.holt@reqres.in", "password": "cityslicka"}
-    response = requests.post('https://reqres.in/api/login', data=pload)
-    if response.status_code == 200:
-        return response.json()
+from utils.api_client import ReqresApiClient
 
-def test_post_login_unsuccessful():
-    pload = {"email": "peter@klaven"}
-    response = requests.post('https://reqres.in/api/login', data=pload)
-    if response.status_code == 400:
-        return response.json()
+class TestLogin():
+
+    def test_post_login_successful(self, api_client):
+        response = api_client.login(data = {"email": "eve.holt@reqres.in", "password": "cityslicka"})
+        assert response.status_code == 200
+
+    def test_post_login_unsuccessful(self, api_client):
+        response = api_client.login(data = {"email": "peter@klaven"})
+        assert response.status_code == 400

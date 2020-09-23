@@ -14,69 +14,29 @@ class ReqresApiClient():
         response = requests.request(method, url)
         return response
 
-    def get_delayed_response(self, delayed_id: int):
-        response = self.request('GET', 'users?delay={delayed_id}')
-        return response
-
-    def get_list_resourse(self):
-        response = self.request('GET', 'unknown')
-        return response
-
-    def get_list_users(self, page_id: int):
-        response = self.request('GET', 'users?page={page_id}')
-        return response
-
-    def get_single_resourse(self, resourse_id: int):
+    def get_resourse(self, resourse_id: int):
         response = self.request('GET', 'unknown/{resourse_id}')
         return response
 
-    def get_single_resourse_not_found(self, resourse_id: int):
-        response = self.request('GET', 'unknown/{resourse_id}')
-        return response
-
-    def get_single_users(self, user_id: int):
-        response = self.request('GET', 'users/{user_id}')
-        return response
-
-    def get_single_users_not_found(self, user_id: int):
-        response = self.request('GET', 'users/{user_id}')
-        return response
-
-    def delete_user(self, user_id: int):
-        response = self.request('DELETE', 'users/{user_id}')
-        return response
-
-    def post_create(self, data: dict):
-        #pload = {"name": "morpheus", "job": "leader"}
-        response = self.request('POST','users', data)
-        return response
-
-    def post_login_successful(self, data: dict):
+    def login(self, data: dict):
         #pload = {"email": "eve.holt@reqres.in", "password": "cityslicka"}
         response = self.request('POST','login', data)
         return response
 
-    def post_login_unsuccessful(self, data: dict):
-        #pload = {"email": "peter@klaven"}
-        response = self.request('POST','login', data)
-        return response
-
-    def post_register_successful(self, data: dict):
+    def register(self, data: dict):
         #pload = {"email": "eve.holt@reqres.in", "password": "pistol"}
         response = self.request('POST','register', data)
         return response
 
-    def post_register_unsuccessful(self, data: dict):
-        #pload = {"email": "sydney@fife"}
-        response = self.request('POST','register', data)
-        return response
-
-    def put_create(self, user_id: int, data: dict):
+    def users(self, user_id: int, data: dict):
         #pload = {"name": "morpheus", "job": "zion resident"}
         response = self.request('PUT','users/{user_id}', data)
         return response
 
-    def patch_update(self, user_id: int, data: dict):
-        #pload = {"name": "morpheus", "job": "zion resident"}
-        response = self.request('PATCH','users/{user_id}', data)
+    def delayed(self, delayed_id: int, data: dict):
+        response = self.request('GET', 'users?delay={delayed_id}')
+        return response
+
+    def users_page(self, page_id: int, data: dict):
+        response = self.request('GET', 'users?page={page_id}')
         return response
