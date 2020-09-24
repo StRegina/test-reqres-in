@@ -9,34 +9,48 @@ class ReqresApiClient():
     def __init__(self):
         self.base_path = 'https://reqres.in/api/'
 
-    def request(self, method:str, path:str, data=None):
+    def request(self, method:str, path:str, data = None):
         url = self.base_path + path
-        response = requests.request(method, url)
+        response = requests.request(method, url, data = None)
         return response
 
     def get_resourse(self, resourse_id: int):
-        response = self.request('GET', 'unknown/{resourse_id}')
+        response = self.request(method = 'GET', path = f'unknown/{resourse_id}')
         return response
 
-    def login(self, data: dict):
+    def login(self, login_data: dict):
         #pload = {"email": "eve.holt@reqres.in", "password": "cityslicka"}
-        response = self.request('POST','login', data)
+        response = self.request(method = 'POST', path = f'login', data = login_data)
         return response
 
-    def register(self, data: dict):
+    def register(self, register_data: dict):
         #pload = {"email": "eve.holt@reqres.in", "password": "pistol"}
-        response = self.request('POST','register', data)
+        response = self.request(method = 'POST', path = f'register', data = register_data)
         return response
 
-    def users(self, user_id: int, data: dict):
+    def get_user_page(self, page_id: int):
+        response = self.request(method = 'GET', path = f'users?page={page_id}')
+        return response
+
+    def get_user(self, user_id: int):
+        response = self.request('GET', f'users/{user_id}')
+        return response
+
+    def put_user(self, user_id: int, user_data: dict):
         #pload = {"name": "morpheus", "job": "zion resident"}
-        response = self.request('PUT','users/{user_id}', data)
+        response = self.request(method = 'PUT', path = f'users/{user_id}', data = user_data)
         return response
 
-    def delayed(self, delayed_id: int, data: dict):
-        response = self.request('GET', 'users?delay={delayed_id}')
+    def post_user(self, user_data: dict):
+        #pload = {"name": "morpheus", "job": "leader"}
+        response = self.request(method = 'POST', path = f'users', data = user_data)
         return response
 
-    def users_page(self, page_id: int, data: dict):
-        response = self.request('GET', 'users?page={page_id}')
+    def patch_update(self, user_id: int, user_data: dict):
+        #pload = {"name": "morpheus", "job": "zion resident"}
+        response = self.request(method = 'PATCH', path = f'users/{user_id}', data = user_data)
+        return response
+
+    def get_delayed_answer(self, seconds: int):
+        response = self.request(method = 'GET', path = f'users?delay={seconds}')
         return response
