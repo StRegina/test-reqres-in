@@ -9,12 +9,24 @@ class ReqresApiClient():
     def __init__(self):
         self.base_path = 'https://reqres.in/api/'
 
-    def request(self, method:str, path:str, data = None):
+    def request(self, method:str, path:str, data:dict = None):
         url = self.base_path + path
-        response = requests.request(method, url, data = None)
+        # словарь в котором мы собираем параметры для реквестов.
+        request_params = {
+            "method": method,
+            "url": url
+        }
+        if data is not None:
+            request_params["data"] = data
+        # ** - Превращает dict в: method = method, url = url, data=data
+        response = requests.request(**request_params)
         return response
 
-    def get_resourse(self, resourse_id: int):
+    def get_resourses(self):
+        response = self.request(method = 'GET', path = f'unknown')
+        return response
+
+    def get_resourse_by_id(self, resourse_id: int):
         response = self.request(method = 'GET', path = f'unknown/{resourse_id}')
         return response
 
@@ -33,7 +45,7 @@ class ReqresApiClient():
         return response
 
     def get_user(self, user_id: int):
-        response = self.request('GET', f'users/{user_id}')
+        response = self.request(method = 'GET', path = f'users/{user_id}')
         return response
 
     def put_user(self, user_id: int, user_data: dict):
